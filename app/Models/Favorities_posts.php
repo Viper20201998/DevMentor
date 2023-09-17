@@ -8,5 +8,4 @@ use Illuminate\Database\Eloquent\Model;
 class Favorities_posts extends Model
 {
     use HasFactory;
-    protected $table = 'favorities_posts';
 }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\FavoritieController;
 use App\Http\Controllers\PostsController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -23,7 +24,8 @@ Route::get(
 );
 
 Route::get('/posts', [PostsController::class, 'index'])->name('posts');
-Route::get('/favorite/{id}', [PostsController::class, 'favorite'])->name('favorite');
+
+
 
 Auth::routes();
 
@@ -31,6 +33,8 @@ Route::middleware('auth')->group(
     function () {
         Route::post('/publish', [PostsController::class, 'store'])->name('publish');
         Route::get('/registerPost', [PostsController::class, 'getForm']);
+        Route::post('/favorite', [FavoritieController::class, 'favorite'])->name('favorite');
+        Route::get('/favoritiesposts', [FavoritieController::class, 'index']);
     }
 );
 

@@ -13,7 +13,7 @@ class PostsController extends Controller
     public function index()
     {
 
-        $posts = Posts::query()->join('users', 'posts.id_user', '=', 'users.id')->select('posts.*', 'users.name', 'users.name AS users')->get();
+        $posts = Posts::query()->join('users', 'posts.id_user', '=', 'users.id')->select('posts.*', 'users.name')->get();
         return view('pages.posts', array("posts" => $posts));
     }
 
@@ -44,19 +44,18 @@ class PostsController extends Controller
             $posts->content = $data['content'];
             $posts->id_user = Auth::user()->id;
             $posts->save();
-            return redirect()->route('posts');
-        } else {
-        }
-    }
 
-    public function favorite($id)
-    {
-        if (auth()->check()) {
-            $favorities = new Favorities_posts();
-            $favorities->id_user = Auth::user()->id;
-            $favorities->id_post = $id;
+            $json = array(
+                "title" => $data['title'],
+                "img" => $data['img'],
+                "content" => $data['content'],
+            );
+            return response()->json($json);
         } else {
-            return redirect()->route('login');
+            $json = array(
+                "data" => "error",
+            );
+            return response()->json($json);
         }
     }
 }
