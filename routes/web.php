@@ -13,6 +13,28 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
 Route::get('/', function () {
-    return view('welcome');
+    return view('template');
+});
+
+Route::get('/home', function () {
+    return view('paginas.home');
+});
+
+Route::get('/introduction', function () {
+    return view('paginas.introduction');
+});
+
+Route::get('/content', function () {
+    return view('paginas.content');
+});
+
+
+Route::get('/mysql', function () {
+    return view('paginas.mysql');
+});
+
+Route::get('/mongodb', function () {
+    return view('paginas.mongodb');
 });

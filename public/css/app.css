@@ -1,0 +1,83 @@
+
+.bg-color{
+    background-color: rgb(50, 2, 95);
+}
+
+/** Apartado del sidebar*/
+
+.nav-pills li a:hover {
+    background-color: rgb(167, 82, 247);
+}
+
+.scroll {
+    width: 1200px;
+    height: 745px;
+    border: 1px solid black;
+    overflow: auto;
+
+}
+
+/*** Apartado de Home*/
+
+.home{
+    margin: 50px auto;
+    width: max-content;
+    border-right: 3px solid;
+    font-family: monospace;
+    text-shadow: 3px 2px 5px black;
+    font-size: 2rem;
+
+    animation: teclear 3s steps(46), efecto .5s step-end infinite alternate;
+}
+
+@keyframes teclear {
+    from { clip-path: polygon(0 0, 0 0, 0 100%, 0% 100%);
+    
+    }
+    to{
+        clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+    }
+}
+
+@keyframes efecto{
+    50%{
+        border-color: transparent;
+    }
+}
+
+.home-img{
+    box-shadow: 5px 3px 7px rgb(198, 216, 0);
+}
+
+.home-img1{
+    box-shadow: 5px 5px 7px rgb(25, 0, 169);
+}
+
+/** Apartado de introduction */
+
+.home1{
+    margin: 50px auto;
+    width: max-content;
+    border-right: 2px solid;
+    font-family: monospace;
+    text-shadow: 3px 2px 5px black;
+    font-size: 2rem;
+
+    animation: typing 4s steps(12), efecto .5s step-end infinite alternate;
+
+}
+
+@keyframes typing {
+    from { clip-path: polygon(0 0, 0 0, 0 100%, 0% 100%);
+    
+    }
+    to{
+        clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+    }
+}
+
+@keyframes efecto{
+    50%{
+        border-color: transparent;
+    }
+}
