@@ -12,7 +12,6 @@ class PostsController extends Controller
 {
     public function index()
     {
-
         $posts = Posts::query()->join('users', 'posts.id_user', '=', 'users.id')->select('posts.*', 'users.name')->get();
         return view('pages.posts', array("posts" => $posts));
     }
@@ -57,5 +56,36 @@ class PostsController extends Controller
             );
             return response()->json($json);
         }
+    }
+    public function getStore()
+    {
+        $posts = Posts::query()->join('users', 'posts.id_user', '=', 'users.id')->select('posts.*', 'users.name')->get();
+        return response()->json($posts);
+    }
+    public function getupdate($id)
+    {
+        $posts = Posts::all()->find($id);
+        return response()->json($posts);
+    }
+    public function update(Request $request, $id)
+    {
+        if ($request->hasFile('img')) {
+            $image = $request->file('img');
+            $name_image = Str::slug($request->input('title')) . "." . $image->guessExtension();
+            $route = public_path("img/");
+            copy($image->getRealPath(), $route . $name_image);
+        } else {
+            $name_image = $request->input('img_prev');
+        }
+
+        $posts = Posts::all()->find($id);
+        $posts->title = $request->input('title');
+        $posts->img = $name_image;
+        $posts->content = $request->input('content');
+        $posts->update();
+        $json = array(
+            "data" => "enviado correctamente"
+        );
+        return response()->json($json);
     }
 }

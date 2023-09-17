@@ -1,32 +1,48 @@
 @extends('template')
 @section('content')
     <a href="{{ url('/registerPost') }}">Postear</a>
+
+    @auth
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#formPosts">Publish</button>
+    @else
+        <a href="{{ route('login') }}" class="btn btn-success">Login</a>
+    @endauth
     <div class="col-md-12">
         <div class="row container-fluid">
             <div class="alertcont"></div>
-            @foreach ($posts as $post)
-                <div class="card col-md-5 d-flex justify-content-between mx-3">
-                    <img src="{{ url('/') }}/img/{{ $post->img }}" class="card-img-top" alt="" />
-                    <div class="card-body">
-                        <h5 class="card-title">{{ $post->title }}</h5>
-                        <p class="card-text">
-                            {{ $post->content }}
-                        </p>
-                        <form action="{{ route('favorite') }}" class="favorities-form">
-                            @csrf
-                            <input type="hiden" name="id_post" value="{{ $post->id }}" class="d-none">
-                            <button type="submit" class="btn btn-warning">Add Favotite</button>
-                        </form>
+
+            <div class="containcard row">
+                @foreach ($posts as $post)
+                    <div class="card col-md-5 d-flex justify-content-between mx-3">
+                        <img src="{{ url('/') }}/img/{{ $post->img }}" class="card-img-top w-100" alt="" />
+                        <div class="card-body">
+                            <h5 class="card-title">{{ $post->title }}</h5>
+                            <p class="card-text">
+                                {{ $post->content }}
+                            </p>
+
+
+
+                            <form action="{{ route('getupdate', $post->id) }}" class="edit-posts">
+                                @method('GET')
+                                @csrf
+                                <button type="submit" class="btn btn-warning" data-bs-toggle="modal"
+                                    data-bs-target="#editPosts">Edit</button>
+                            </form>
+                            <form action="{{ route('favorite') }}" class="favorities-form">
+                                @csrf
+                                <input type="hiden" name="id_post" value="{{ $post->id }}" class="d-none">
+                                <button type="submit" class="btn btn-warning">Add Favotite</button>
+                            </form>
+                        </div>
                     </div>
-                </div>
-            @endforeach
-            <div class="containcard"></div>
+                @endforeach
+            </div>
         </div>
     </div>
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Publish</button>
 
-
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" style="display: none;"
+    <!-- posts -->
+    <div class="modal fade" id="formPosts" tabindex="-1" aria-labelledby="exampleModalLabel" style="display: none;"
         aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -58,10 +74,48 @@
             </div>
         </div>
     </div>
+    <!-- end posts -->
+    <!-- edit posts -->
+    <div class="modal fade" id="editPosts" tabindex="-1" aria-labelledby="exampleModalLabel" style="display: none;"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Edit your post</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="" id="update_form">
+                        @csrf
+                        <div class="mb-3">
+                            <label for="recipient-name" class="col-form-label">Title:</label>
+                            <input type="text" class="form-control"id="title" name="title">
+                        </div>
+                        <div class="mb-3">
+                            <label for="recipient-name" class="col-form-label">Image</label>
+
+                            <input type="file" class="form-control" id="img" name="img">
+                            <input type="hidden" name="img_prev" id="img_prev">
+                        </div>
+                        <div class="mb-3">
+                            <label for="message-text" class="col-form-label">Content:</label>
+                            <textarea class="form-control" id="content" name="content"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="sendupdate_form">Post</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end edit posts -->
 @endsection
 
 @section('script')
     @parent
     <script type="module" src="{{ asset('assets/js/favorite.js') }}"></script>
     <script type="module" src="{{ asset('assets/js/publish.js') }}"></script>
+    <script type="module" src="{{ asset('assets/js/update.js') }}"></script>
 @endsection

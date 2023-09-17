@@ -31,7 +31,10 @@ Auth::routes();
 
 Route::middleware('auth')->group(
     function () {
+        Route::get('/edit/{id}', [PostsController::class, 'getupdate'])->name('getupdate');
+        Route::put('/update/{id}', [PostsController::class, 'update'])->name('update');
         Route::post('/publish', [PostsController::class, 'store'])->name('publish');
+        Route::get('/getstore', [PostsController::class, 'getStore'])->name('getstore');
         Route::get('/registerPost', [PostsController::class, 'getForm']);
         Route::post('/favorite', [FavoritieController::class, 'favorite'])->name('favorite');
         Route::get('/favoritiesposts', [FavoritieController::class, 'index']);
