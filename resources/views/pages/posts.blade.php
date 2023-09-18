@@ -23,15 +23,12 @@
                             <p class="card-text">
                                 {{ $post->content }}
                             </p>
-
-
-
-                            <form action="{{ route('getupdate', $post->id) }}" class="edit-posts">
+                            <form hidden action="{{ route('getupdate', $post->id) }}" class="edit-posts">
                                 @method('GET')
                                 @csrf
-                                <button type="submit" class="btn btn-warning">Edit</button>
+                                <button hidden type="submit" class="btn btn-warning">Edit</button>
                             </form>
-                            <button type="submit" class="btn btn-warning btn-form_update" data-bs-toggle="modal"
+                            <button class="btn btn-warning btn-form_update" data-bs-toggle="modal"
                                 data-bs-target="#editPosts" value="{{ $post->id }}">Edit2</button>
                             <form action="{{ route('favorite') }}" class="favorities-form">
                                 @csrf

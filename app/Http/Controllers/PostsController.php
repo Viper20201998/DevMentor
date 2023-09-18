@@ -84,8 +84,8 @@ class PostsController extends Controller
             $posts = Posts::all()->find($id);
             $posts->title = $request->input('title2');
             $posts->img = $name_image;
-            return response()->json($posts);
             $posts->content = $request->input('content2');
+            return response()->json($posts);
             $posts->update();
             $json = array(
                 "data" => "enviado correctamente"
