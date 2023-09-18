@@ -9,8 +9,7 @@
         <div class="col-2">
             <section>
                 <h4>Links</h4>
-                <p>Welcome</p>
-                <p>Home</p>
+                <a href="{{ url('/') }}">Home</a>
                 <p>Documents</p>
                 <p>Information</p>
             </section>

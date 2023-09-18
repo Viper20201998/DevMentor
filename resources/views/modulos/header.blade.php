@@ -15,7 +15,9 @@
                     <a class="nav-link text-light" href="{{ url('/posts') }}">Posts</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-light" href="#" tabindex="-1" aria-disabled="true">Information</a>
+                    <a class="nav-link text-light" href="{{ url('/favoritiesposts') }}" tabindex="-1"
+                        aria-disabled="true">My
+                        Favorites</a>
                 </li>
                 <!-- dropdown-menu -->
                 @auth

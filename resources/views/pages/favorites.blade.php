@@ -17,34 +17,38 @@
 
                                     <div class="d-flex justify-content-end aling-items-start">
                                         <div class="d-flex flex-column">
-                                            <form action="{{ route('delete', $post->id) }}" method="post">
-                                                @method('Delete')
-                                                @csrf
-                                                <button type="submit" class="btn btn-danger">
-                                                    <i class="bi bi-trash"></i>
-                                                    Eliminar
-                                                </button>
-                                            </form>
-                                            <form action="{{ route('getupdate', $post->id) }}" class="edit-posts ">
-                                                @method('GET')
-                                                @csrf
-                                                <button type="submit" class="btn btn-warning text-secondary">
-                                                    <i class="bi bi-pencil-square"></i>
-                                                    Edit
-                                                </button>
-                                            </form>
 
-                                            <button hidden class="btn btn-warning btn-form_update" data-bs-toggle="modal"
-                                                data-bs-target="#editPosts" value="{{ $post->id }}">Edit2</button>
-                                            <form action="{{ route('favorite') }}" class="favorities-form">
-                                                @csrf
-                                                <input type="hiden" name="id_post" value="{{ $post->id }}"
-                                                    class="d-none">
-                                                <button type="submit" class="btn btn-outline-warning text-dark">
-                                                    <i class="bi bi-star-fill"></i>
-                                                    Add Favotite
-                                                </button>
-                                            </form>
+                                            @if ($post->id_user == Auth::user()->id)
+                                                <form action="{{ route('delete', $post->id) }}" method="post">
+                                                    @method('Delete')
+                                                    @csrf
+                                                    <button type="submit" class="btn btn-danger">
+                                                        <i class="bi bi-trash"></i>
+                                                        Eliminar
+                                                    </button>
+                                                </form>
+                                                <form action="{{ route('getupdate', $post->id) }}" class="edit-posts ">
+                                                    @method('GET')
+                                                    @csrf
+                                                    <button type="submit" class="btn btn-warning text-secondary">
+                                                        <i class="bi bi-pencil-square"></i>
+                                                        Edit
+                                                    </button>
+                                                </form>
+
+                                                <button hidden class="btn btn-warning btn-form_update"
+                                                    data-bs-toggle="modal" data-bs-target="#editPosts"
+                                                    value="{{ $post->id }}">Edit2</button>
+                                                <form action="{{ route('favorite') }}" class="favorities-form">
+                                                    @csrf
+                                                    <input type="hiden" name="id_post" value="{{ $post->id }}"
+                                                        class="d-none">
+                                                    <button type="submit" class="btn btn-outline-warning text-dark">
+                                                        <i class="bi bi-star-fill"></i>
+                                                        Add Favotite
+                                                    </button>
+                                                </form>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>

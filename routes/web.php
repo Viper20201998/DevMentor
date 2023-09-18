@@ -19,6 +19,27 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/posts', [PostsController::class, 'index'])->name('posts');
+Route::get(
+    '/',
+    function () {
+        return view('paginas.home');
+    }
+);
+
+
+Route::get(
+    '/introduction',
+    function () {
+        return view('paginas.introduction');
+    }
+);
+
+Route::get(
+    '/content',
+    function () {
+        return view('paginas.content');
+    }
+);
 
 
 
@@ -33,19 +54,14 @@ Route::middleware('auth')->group(
         Route::get('/getstore', [PostsController::class, 'getStore'])->name('getstore');
         Route::get('/registerPost', [PostsController::class, 'getForm']);
         Route::post('/favorite', [FavoritieController::class, 'favorite'])->name('favorite');
-        Route::get('/favoritiesposts', [FavoritieController::class, 'index']);
+        Route::get('/favoritiesposts', [FavoritieController::class, 'index'])->name('favoritiesposts');
         Route::delete('/deletefavorite/{id}', [FavoritieController::class, 'deletefavorite'])->name('deletefavorite');
     }
 );
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::get(
-    '/',
-    function () {
-        return view('template');
-    }
-);
+
 
 Route::get(
     '/home',
