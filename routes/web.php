@@ -15,12 +15,9 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/', function () {
-    return view('template');
-});
-
-Route::get('/home', function () {
     return view('paginas.home');
 });
+
 
 Route::get('/introduction', function () {
     return view('paginas.introduction');
