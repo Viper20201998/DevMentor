@@ -1,4 +1,7 @@
 @extends('template')
+@section('tokens')
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+@endsection
 @section('content')
     <a href="{{ url('/registerPost') }}">Postear</a>
 
@@ -26,9 +29,10 @@
                             <form action="{{ route('getupdate', $post->id) }}" class="edit-posts">
                                 @method('GET')
                                 @csrf
-                                <button type="submit" class="btn btn-warning" data-bs-toggle="modal"
-                                    data-bs-target="#editPosts">Edit</button>
+                                <button type="submit" class="btn btn-warning">Edit</button>
                             </form>
+                            <button type="submit" class="btn btn-warning btn-form_update" data-bs-toggle="modal"
+                                data-bs-target="#editPosts" value="{{ $post->id }}">Edit2</button>
                             <form action="{{ route('favorite') }}" class="favorities-form">
                                 @csrf
                                 <input type="hiden" name="id_post" value="{{ $post->id }}" class="d-none">
@@ -75,6 +79,7 @@
         </div>
     </div>
     <!-- end posts -->
+
     <!-- edit posts -->
     <div class="modal fade" id="editPosts" tabindex="-1" aria-labelledby="exampleModalLabel" style="display: none;"
         aria-hidden="true">
@@ -85,21 +90,23 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="" id="update_form">
+                    <form action="" id="update_form" method="post">
+                        @method('PUT')
                         @csrf
+                        <input type="hidden" name="id_post" id="id_post">
                         <div class="mb-3">
                             <label for="recipient-name" class="col-form-label">Title:</label>
-                            <input type="text" class="form-control"id="title" name="title">
+                            <input type="text" class="form-control" id="title2" name="title2">
                         </div>
                         <div class="mb-3">
                             <label for="recipient-name" class="col-form-label">Image</label>
 
-                            <input type="file" class="form-control" id="img" name="img">
+                            <input type="file" class="form-control" id="img" name="img2">
                             <input type="hidden" name="img_prev" id="img_prev">
                         </div>
                         <div class="mb-3">
                             <label for="message-text" class="col-form-label">Content:</label>
-                            <textarea class="form-control" id="content" name="content"></textarea>
+                            <input class="form-control" id="content2" name="content2">
                         </div>
                     </form>
                 </div>

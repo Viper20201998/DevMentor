@@ -6,6 +6,7 @@ use App\Models\Favorities_posts;
 use App\Models\Posts;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 class PostsController extends Controller
@@ -64,28 +65,40 @@ class PostsController extends Controller
     }
     public function getupdate($id)
     {
-        $posts = Posts::all()->find($id);
-        return response()->json($posts);
+        $post = Posts::all()->find($id);
+        return response()->json($post);
+        // return view("pages.update_posts", array("posts" => $post));
     }
     public function update(Request $request, $id)
     {
-        if ($request->hasFile('img')) {
-            $image = $request->file('img');
-            $name_image = Str::slug($request->input('title')) . "." . $image->guessExtension();
-            $route = public_path("img/");
-            copy($image->getRealPath(), $route . $name_image);
-        } else {
-            $name_image = $request->input('img_prev');
-        }
+        //return response($id);
+        try {
+            if ($request->hasFile('img2')) {
+                $image = $request->file('img2');
+                $name_image = Str::slug($request->input('title2')) . "." . $image->guessExtension();
+                $route = public_path("img/");
+                copy($image->getRealPath(), $route . $name_image);
+            } else {
+                $name_image = $request->input('img_prev');
+            }
+            $posts = Posts::all()->find($id);
+            $posts->title = $request->input('title2');
+            $posts->img = $name_image;
+            return response()->json($posts);
+            $posts->content = $request->input('content2');
+            $posts->update();
+            $json = array(
+                "data" => "enviado correctamente"
+            );
+            //  return response()->json($json);
+        } catch (\Exception $e) {
+            Log::error($e);
 
-        $posts = Posts::all()->find($id);
-        $posts->title = $request->input('title');
-        $posts->img = $name_image;
-        $posts->content = $request->input('content');
-        $posts->update();
-        $json = array(
-            "data" => "enviado correctamente"
-        );
-        return response()->json($json);
+            // Puedes personalizar un mensaje de error
+            $errorMessage = "Ocurrió un error inesperado.";
+
+            // Devuelve una respuesta de error con un mensaje descriptivo
+            return response()->json(["error" => $errorMessage], 500);
+        }
     }
 }
