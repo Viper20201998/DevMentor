@@ -11,7 +11,7 @@ class FavoritieController extends Controller
     public function index()
     {
         $favorite = Favorities_posts::query()->join('users', 'favorities_posts.id_user', '=', 'users.id')->join('posts', 'favorities_posts.id_post', '=', 'posts.id')->select('posts.*', 'favorities_posts.id')->where('favorities_posts.id_user', '=', Auth::user()->id)->get();
-        return response()->json($favorite);
+        return view("pages.favorites", array("favorite" => $favorite));
     }
     public function favorite(Request $request)
     {
