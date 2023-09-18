@@ -11,7 +11,17 @@
             </a>
             <ul class="dropdown-menu dropdown-menu-dark">
                 @foreach ($favorites as $item)
-                    <li><a class="dropdown-item" href="#">{{ $item->title }}</a></li>
+                    <li class="d-flex"><a class="dropdown-item" href="#">{{ $item->title }}</a>
+                        <button type="submit" class="btn text-danger"
+                            onclick="event.preventDefault(); document.getElementById('delete-favorite').submit();">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    </li>
+                    <form action="{{ route('deletefavorite', $item->id) }}" id="delete-favorite" class="d-none" method="post">
+                        @method('Delete')
+                        @csrf
+                        </a>
+                    </form>
                 @endforeach
             </ul>
         </li>
@@ -48,12 +58,18 @@
                                             <form action="{{ route('delete', $post->id) }}" method="post">
                                                 @method('Delete')
                                                 @csrf
-                                                <button type="submit" class="btn btn-danger">Eliminar</button>
+                                                <button type="submit" class="btn btn-danger">
+                                                    <i class="bi bi-trash"></i>
+                                                    Eliminar
+                                                </button>
                                             </form>
                                             <form action="{{ route('getupdate', $post->id) }}" class="edit-posts ">
                                                 @method('GET')
                                                 @csrf
-                                                <button type="submit" class="btn btn-warning">Edit</button>
+                                                <button type="submit" class="btn btn-warning text-secondary">
+                                                    <i class="bi bi-pencil-square"></i>
+                                                    Edit
+                                                </button>
                                             </form>
 
                                             <button hidden class="btn btn-warning btn-form_update" data-bs-toggle="modal"
@@ -62,8 +78,10 @@
                                                 @csrf
                                                 <input type="hiden" name="id_post" value="{{ $post->id }}"
                                                     class="d-none">
-                                                <button type="submit" class="btn btn-outline-warning text-dark">Add
-                                                    Favotite</button>
+                                                <button type="submit" class="btn btn-outline-warning text-dark">
+                                                    <i class="bi bi-star-fill"></i>
+                                                    Add Favotite
+                                                </button>
                                             </form>
                                         </div>
                                     </div>

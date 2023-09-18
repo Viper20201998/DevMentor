@@ -78,9 +78,9 @@ class PostsController extends Controller
     public function update(Request $request, $id)
     {
         //return response($id);
-        if ($request->hasFile('img2')) {
-            $image = $request->file('img2');
-            $name_image = Str::slug($request->input('title2')) . "." . $image->guessExtension();
+        if ($request->hasFile('img')) {
+            $image = $request->file('img');
+            $name_image = Str::slug($request->input('title')) . "." . $image->guessExtension();
             $route = public_path("img/");
             copy($image->getRealPath(), $route . $name_image);
         } else {
@@ -99,7 +99,9 @@ class PostsController extends Controller
 
     public function destroy($id)
     {
+        return "hopla";
         Posts::all()->find($id)->delete();
+
         return redirect()->route('posts');
     }
 }

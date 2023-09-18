@@ -38,8 +38,9 @@ class FavoritieController extends Controller
             return redirect()->route('login');
         }
     }
-    public function destroy($id)
+    public function deletefavorite($id)
     {
-        $favorities = Favorities_posts::all()->find($id)->delete();
+        Favorities_posts::all()->find($id)->delete();
+        return redirect()->route('posts');
     }
 }

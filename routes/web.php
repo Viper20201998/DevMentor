@@ -34,6 +34,7 @@ Route::middleware('auth')->group(
         Route::get('/registerPost', [PostsController::class, 'getForm']);
         Route::post('/favorite', [FavoritieController::class, 'favorite'])->name('favorite');
         Route::get('/favoritiesposts', [FavoritieController::class, 'index']);
+        Route::delete('/deletefavorite/{id}', [FavoritieController::class, 'deletefavorite'])->name('deletefavorite');
     }
 );
 
