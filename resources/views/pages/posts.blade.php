@@ -3,42 +3,72 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
 <a hidden href="{{ url('/registerPost') }}">Postear</a>
+@auth
+    @section('favorite')
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Favorites
+            </a>
+            <ul class="dropdown-menu dropdown-menu-dark">
+                @foreach ($favorites as $item)
+                    <li><a class="dropdown-item" href="#">{{ $item->title }}</a></li>
+                @endforeach
+            </ul>
+        </li>
+    @endsection
+@endauth
 
-@section('publishs')
+
+@section('publish')
     @auth
-        <button type="button" class="btn btn-primary ms-2" data-bs-toggle="modal" data-bs-target="#formPosts">Publish</button>
-        @yield('logout')
-    @else
-        <a href="{{ route('login') }}" class="btn btn-success ms-2">Login</a>
+        <button type="button" class="btn btn-outline-primary ms-2" data-bs-toggle="modal"
+            data-bs-target="#formPosts">Publish</button>
     @endauth
 @endsection
-@section('content')
+@section('contain')
     <div class="col-md-12">
         <div class="row container-fluid">
             <div class="alertcont"></div>
 
             <div class="containcard row">
                 @foreach ($posts as $post)
-                    <div class="card col-md-5 d-flex justify-content-between mx-auto w-40 mt-3">
-                        <img src="{{ url('/') }}/img/{{ $post->img }}" class="card-img-top w-100" alt="" />
-                        <div class="card-body">
-                            <h5 class="card-title">{{ $post->title }}</h5>
-                            <p class="card-text">
-                                {{ $post->content }}
-                            </p>
+                    <div class="card my-3">
+                        <div class="row g-0">
+                            <div class="col-md-4">
+                                <img src="{{ url('/') }}/img/{{ $post->img }}" class="img-fluid rounded-start"
+                                    alt="">
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body ">
+                                    <h5 class="card-title">{{ $post->title }}</h5>
+                                    <p class="card-text">{{ $post->content }}</p>
 
-                            <form action="{{ route('getupdate', $post->id) }}" class="edit-posts">
-                                @method('GET')
-                                @csrf
-                                <button type="submit" class="btn btn-warning">Edit</button>
-                            </form>
-                            <button class="btn btn-warning btn-form_update" data-bs-toggle="modal"
-                                data-bs-target="#editPosts" value="{{ $post->id }}">Edit2</button>
-                            <form action="{{ route('favorite') }}" class="favorities-form">
-                                @csrf
-                                <input type="hiden" name="id_post" value="{{ $post->id }}" class="d-none">
-                                <button type="submit" class="btn btn-warning">Add Favotite</button>
-                            </form>
+                                    <div class="d-flex justify-content-end aling-items-start">
+                                        <div class="d-flex flex-column">
+                                            <form action="{{ route('delete', $post->id) }}" method="post">
+                                                @method('Delete')
+                                                @csrf
+                                                <button type="submit" class="btn btn-danger">Eliminar</button>
+                                            </form>
+                                            <form action="{{ route('getupdate', $post->id) }}" class="edit-posts ">
+                                                @method('GET')
+                                                @csrf
+                                                <button type="submit" class="btn btn-warning">Edit</button>
+                                            </form>
+
+                                            <button hidden class="btn btn-warning btn-form_update" data-bs-toggle="modal"
+                                                data-bs-target="#editPosts" value="{{ $post->id }}">Edit2</button>
+                                            <form action="{{ route('favorite') }}" class="favorities-form">
+                                                @csrf
+                                                <input type="hiden" name="id_post" value="{{ $post->id }}"
+                                                    class="d-none">
+                                                <button type="submit" class="btn btn-outline-warning text-dark">Add
+                                                    Favotite</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 @endforeach
@@ -94,7 +124,6 @@
                     <form action="" id="update_form" method="post">
                         @method('PUT')
                         @csrf
-                        <input type="hidden" name="id_post" id="id_post">
                         <div class="mb-3">
                             <label for="recipient-name" class="col-form-label">Title:</label>
                             <input type="text" class="form-control" id="title2" name="title2">

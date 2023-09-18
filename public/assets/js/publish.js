@@ -41,28 +41,29 @@ function getData() {
             return response.json();
         })
         .then((da) => {
-            da.forEach(datas => {
-                card2.innerHTML = `
-                <div class="card col-md-5 d-flex justify-content-between mx-3">
-                    <div id="img-content">
-                    </div>
-                    <div class="card-body">
-                        <h5 class="card-title">${datas.title}</h5>
-                        <p class="card-text">
-                            ${datas.content}
-                        </p>
-                        <form action="{{ route('favorite') }}" class="favorities-form">
-                            <input type="hidden" id="csrf-token" value="{{ csrf_token() }}">
-                            <input type="hiden" name="id_post" value="${datas.id}" class="d-none">
-                            <button type="submit" class="btn btn-warning">Add Favotite</button>
-                        </form>
-                    </div>
-                </div>
-                `;
-                card.appendChild(card2)
-                getImg(datas.img)
+            console.log(da)
+            // da.forEach(datas => {
+            //     card2.innerHTML = `
+            //     <div class="card col-md-5 d-flex justify-content-between mx-3">
+            //         <div id="img-content">
+            //         </div>
+            //         <div class="card-body">
+            //             <h5 class="card-title">${datas.title}</h5>
+            //             <p class="card-text">
+            //                 ${datas.content}
+            //             </p>
+            //             <form action="{{ route('favorite') }}" class="favorities-form">
+            //                 <input type="hidden" id="csrf-token" value="{{ csrf_token() }}">
+            //                 <input type="hiden" name="id_post" value="${datas.id}" class="d-none">
+            //                 <button type="submit" class="btn btn-warning">Add Favotite</button>
+            //             </form>
+            //         </div>
+            //     </div>
+            //     `;
+            //     card.appendChild(card2)
+            //     getImg(datas.img)
 
-            });
+            // });
         })
         .catch((error) => {
             console.log(error);

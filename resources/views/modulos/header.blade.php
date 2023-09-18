@@ -17,13 +17,29 @@
                 <li class="nav-item">
                     <a class="nav-link text-light" href="#" tabindex="-1" aria-disabled="true">Information</a>
                 </li>
-
+                <!-- dropdown-menu -->
+                @auth
+                    @yield('favorite')
+                @endauth
+                <!-- end dropdown-menu -->
             </ul>
             <form class="d-flex">
                 <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                 <button class="btn btn-outline-success" type="submit">Search</button>
-                @yield('publishs')
+                @auth
+                    @yield('publish')
+                @else
+                    <a href="{{ route('login') }}" class="btn btn-outline-success ms-2 ">Login</a>
+                @endauth
             </form>
+            @auth
+                <form action="{{ route('logout') }}" method="POST">
+                    @csrf
+                    <button type="submit" class="btn btn-outline-danger mx-2">Logout</button>
+                </form>
+            @else
+            @endauth
+
         </div>
     </div>
 </nav>

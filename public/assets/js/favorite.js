@@ -7,11 +7,9 @@ favoritiesForms.forEach(function(form) {
     form.addEventListener("submit", (e) => {
         e.preventDefault();
         console.log(e.target);
-
         // Obtener los datos del formulario
         const formData = new FormData(form);
         console.log(formData);
-
         // Realizar la solicitud POST con Fetch API
         fetch(form.action, {
             method: "POST",
@@ -33,18 +31,14 @@ favoritiesForms.forEach(function(form) {
                     aler.className = "alert alert-danger";
                     aler.textContent = data.detail;
                     alertcont.appendChild(aler);
-
-
                 } else {
                     aler.className = "alert alert-success";
                     aler.textContent = data.detail;
                     alertcont.appendChild(aler);
-
                 }
                 setTimeout(function() {
                     alertcont.removeChild(aler)
                 }, 5000);
-
             })
             .catch(function(error) {
                 // Manejar errores aquí
@@ -52,3 +46,5 @@ favoritiesForms.forEach(function(form) {
             });
     });
 });
+
+

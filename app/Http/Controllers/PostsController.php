@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Favorities_posts;
 use App\Models\Posts;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -12,8 +13,14 @@ class PostsController extends Controller
 {
     public function index()
     {
-        $posts = Posts::query()->join('users', 'posts.id_user', '=', 'users.id')->select('posts.*', 'users.name')->get();
-        return view('pages.posts', array("posts" => $posts));
+        if (auth()->check()) {
+            $posts = Posts::query()->join('users', 'posts.id_user', '=', 'users.id')->select('posts.*', 'users.name')->get();
+            $favorite = Favorities_posts::query()->join('users', 'favorities_posts.id_user', '=', 'users.id')->join('posts', 'favorities_posts.id_post', '=', 'posts.id')->select('posts.*', 'favorities_posts.id')->where('favorities_posts.id_user', '=', Auth::user()->id)->get();
+            return view('pages.posts', array("posts" => $posts, "favorites" => $favorite));
+        } else {
+            $posts = Posts::query()->join('users', 'posts.id_user', '=', 'users.id')->select('posts.*', 'users.name')->get();
+            return view('pages.posts', array("posts" => $posts));
+        }
     }
 
     public function getForm()
@@ -65,39 +72,34 @@ class PostsController extends Controller
     public function getupdate($id)
     {
         $post = Posts::all()->find($id);
-        return response()->json($post);
-        // return view("pages.update_posts", array("posts" => $post));
+        //return response()->json($post);
+        return view("pages.update_posts", array("posts" => $post));
     }
     public function update(Request $request, $id)
     {
         //return response($id);
-        try {
-            if ($request->hasFile('img2')) {
-                $image = $request->file('img2');
-                $name_image = Str::slug($request->input('title2')) . "." . $image->guessExtension();
-                $route = public_path("img/");
-                copy($image->getRealPath(), $route . $name_image);
-            } else {
-                $name_image = $request->input('img_prev');
-            }
-            $posts = Posts::all()->find($id);
-            $posts->title = $request->input('title2');
-            $posts->img = $name_image;
-            return response()->json($posts);
-            $posts->content = $request->input('content2');
-            $posts->update();
-            $json = array(
-                "data" => "enviado correctamente"
-            );
-            //  return response()->json($json);
-        } catch (\Exception $e) {
-            Log::error($e);
-
-            // Puedes personalizar un mensaje de error
-            $errorMessage = "Ocurrió un error inesperado.";
-
-            // Devuelve una respuesta de error con un mensaje descriptivo
-            return response()->json(["error" => $errorMessage], 500);
+        if ($request->hasFile('img2')) {
+            $image = $request->file('img2');
+            $name_image = Str::slug($request->input('title2')) . "." . $image->guessExtension();
+            $route = public_path("img/");
+            copy($image->getRealPath(), $route . $name_image);
+        } else {
+            $name_image = $request->input('img_prev');
         }
+        $posts = Posts::all()->find($id);
+        $posts->title = $request->input('title');
+        $posts->img = $name_image;
+        $posts->content = $request->input('content');
+        $posts->update();
+        $json = array(
+            "data" => "enviado correctamente"
+        );
+        return redirect()->route('posts');
+    }
+
+    public function destroy($id)
+    {
+        Posts::all()->find($id)->delete();
+        return redirect()->route('posts');
     }
 }

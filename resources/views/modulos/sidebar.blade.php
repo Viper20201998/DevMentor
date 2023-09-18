@@ -79,30 +79,28 @@
                             <li class="nav-item my-1">
                                 <a class="nav-link text-white" href="#">Node JS</a>
                             </li>
+                            <li class="nav-item my-1 disabled">
+                                <a href="#sidemenu3" data-bs-toggle="collapse"
+                                    class="nav-link text-white text-center text-sm-star" aria-current="page">
+                                    <i class="bi bi-database-down"></i>
+                                    <span class="ms-2 d-none d-sm-inline">Data Base</span>
+                                    <i class="bi bi-caret-down-fill"></i>
+                                </a>
+                                <ul class="nav collapse collapse-horizontal ms-1 flex-column" id="sidemenu3"
+                                    data-bs-parent="#menu">
+                                    <li class="nav-item my-1">
+                                        <a class="nav-link text-white" href="{{ url('/mysql') }}"
+                                            aria-current="page">MySQL</a>
+                                    </li>
+                                    <li class="nav-item my-1">
+                                        <a class="nav-link text-white" href="{{ url('/mongodb') }}">Mongo DB</a>
+                                    </li>
+                                    <li class="nav-item my-1 pb-5">
+                                        <a class="nav-link text-white" href="#"></a>
+                                    </li>
+                                </ul>
+                            </li>
                         </ul>
-                    </li>
-
-                    <li class="nav-item my-1 disabled">
-                        <a href="#sidemenu3" data-bs-toggle="collapse"
-                            class="nav-link text-white text-center text-sm-star" aria-current="page">
-                            <i class="bi bi-database-down"></i>
-                            <span class="ms-2 d-none d-sm-inline">Data Base</span>
-                            <i class="bi bi-caret-down-fill"></i>
-                        </a>
-                        <ul class="nav collapse collapse-horizontal ms-1 flex-column" id="sidemenu3"
-                            data-bs-parent="#menu">
-                            <li class="nav-item my-1">
-                                <a class="nav-link text-white" href="{{ url('/mysql') }}" aria-current="page">MySQL</a>
-                            </li>
-                            <li class="nav-item my-1">
-                                <a class="nav-link text-white" href="{{ url('/mongodb') }}">Mongo DB</a>
-                            </li>
-                            <li class="nav-item my-1 pb-5">
-                                <a class="nav-link text-white" href="#"></a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
             </div>
             <div>
             </div>

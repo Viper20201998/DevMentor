@@ -1,7 +1,7 @@
 @extends('/template')
 
 
-@section('content')
+@section('contain')
     <form action="{{ route('update', $posts->id) }}" method="post" enctype="multipart/form-data">
         @method('PUT')
         @csrf
