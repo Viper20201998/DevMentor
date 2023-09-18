@@ -2,21 +2,24 @@
 @section('tokens')
     <meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
-@section('content')
-    <a href="{{ url('/registerPost') }}">Postear</a>
+<a hidden href="{{ url('/registerPost') }}">Postear</a>
 
+@section('publishs')
     @auth
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#formPosts">Publish</button>
+        <button type="button" class="btn btn-primary ms-2" data-bs-toggle="modal" data-bs-target="#formPosts">Publish</button>
+        @yield('logout')
     @else
-        <a href="{{ route('login') }}" class="btn btn-success">Login</a>
+        <a href="{{ route('login') }}" class="btn btn-success ms-2">Login</a>
     @endauth
+@endsection
+@section('content')
     <div class="col-md-12">
         <div class="row container-fluid">
             <div class="alertcont"></div>
 
             <div class="containcard row">
                 @foreach ($posts as $post)
-                    <div class="card col-md-5 d-flex justify-content-between mx-3">
+                    <div class="card col-md-5 d-flex justify-content-between mx-auto w-40 mt-3">
                         <img src="{{ url('/') }}/img/{{ $post->img }}" class="card-img-top w-100" alt="" />
                         <div class="card-body">
                             <h5 class="card-title">{{ $post->title }}</h5>
@@ -24,14 +27,12 @@
                                 {{ $post->content }}
                             </p>
 
-
-
                             <form action="{{ route('getupdate', $post->id) }}" class="edit-posts">
                                 @method('GET')
                                 @csrf
                                 <button type="submit" class="btn btn-warning">Edit</button>
                             </form>
-                            <button type="submit" class="btn btn-warning btn-form_update" data-bs-toggle="modal"
+                            <button class="btn btn-warning btn-form_update" data-bs-toggle="modal"
                                 data-bs-target="#editPosts" value="{{ $post->id }}">Edit2</button>
                             <form action="{{ route('favorite') }}" class="favorities-form">
                                 @csrf
@@ -121,7 +122,6 @@
 @endsection
 
 @section('script')
-    @parent
     <script type="module" src="{{ asset('assets/js/favorite.js') }}"></script>
     <script type="module" src="{{ asset('assets/js/publish.js') }}"></script>
     <script type="module" src="{{ asset('assets/js/update.js') }}"></script>

@@ -16,12 +16,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get(
-    '/',
-    function () {
-        return view('welcome');
-    }
-);
+
 
 Route::get('/posts', [PostsController::class, 'index'])->name('posts');
 
@@ -42,3 +37,46 @@ Route::middleware('auth')->group(
 );
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::get(
+    '/',
+    function () {
+        return view('template');
+    }
+);
+
+Route::get(
+    '/home',
+    function () {
+        return view('paginas.home');
+    }
+);
+
+Route::get(
+    '/introduction',
+    function () {
+        return view('paginas.introduction');
+    }
+);
+
+Route::get(
+    '/content',
+    function () {
+        return view('paginas.content');
+    }
+);
+
+
+Route::get(
+    '/mysql',
+    function () {
+        return view('paginas.mysql');
+    }
+);
+
+Route::get(
+    '/mongodb',
+    function () {
+        return view('paginas.mongodb');
+    }
+);

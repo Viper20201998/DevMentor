@@ -5,6 +5,7 @@ const inpImg = document.getElementById("img_prev");
 const inpContent = document.getElementById("content2");
 
 btn.addEventListener("click", (e) => {
+    console.log(e)
     console.log(btn.value);
     getUpdate(btn.value);
 });
