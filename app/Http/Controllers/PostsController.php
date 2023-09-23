@@ -99,7 +99,6 @@ class PostsController extends Controller
 
     public function destroy($id)
     {
-        return "hopla";
         Posts::all()->find($id)->delete();
 
         return redirect()->route('posts');
